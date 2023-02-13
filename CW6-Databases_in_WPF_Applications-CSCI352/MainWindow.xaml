@@ -7,8 +7,12 @@
         mc:Ignorable="d"
         Title="MainWindow" Height="450" Width="800">
     <Grid>
-        <TextBlock x:Name="txt_display" HorizontalAlignment="Center" Margin="0,119,0,0" TextWrapping="Wrap" Text="TextBlock" VerticalAlignment="Top"/>
-        <Button x:Name="btn_see_assets" Content="See Assets" HorizontalAlignment="Left" Margin="313,236,0,0" VerticalAlignment="Top" Click="btn_see_assets_Click"/>
-        <Button x:Name="btn_see_employees" Content="See Employees" HorizontalAlignment="Left" Margin="414,236,0,0" VerticalAlignment="Top" RenderTransformOrigin="0.884,-0.259" Click="btn_see_employees_Click"/>
+        <TextBlock x:Name="txt_display" HorizontalAlignment="Left" Margin="41,62,0,0" TextWrapping="Wrap" Text="Table" VerticalAlignment="Top"/>
+        <Button x:Name="btn_see_assets" Content="See Assets" HorizontalAlignment="Left" Margin="386,236,0,0" VerticalAlignment="Top" Click="btn_see_assets_Click"/>
+        <Button x:Name="btn_see_employees" Content="See Employees" HorizontalAlignment="Left" Margin="487,236,0,0" VerticalAlignment="Top" RenderTransformOrigin="0.884,-0.259" Click="btn_see_employees_Click"/>
+        <Button x:Name="btn_add_assets" Content="Add Asset" HorizontalAlignment="Left" Margin="387,296,0,0" VerticalAlignment="Top" Click="btn_add_assets_Click"/>
+        <TextBox x:Name="txt_add_to_table" HorizontalAlignment="Left" Margin="416,352,0,0" TextWrapping="Wrap" Text="" VerticalAlignment="Top" Width="120"/>
+        <Button x:Name="btn_add_employees" Content="Add Employee" HorizontalAlignment="Left" Margin="487,296,0,0" VerticalAlignment="Top" Click="btn_add_employees_Click"/>
+        <Label x:Name="lbl_add_table_instructions" Content="If you'd like to add to the table, please use the format: ID AssetID/FirstName Description/LastName" HorizontalAlignment="Left" Margin="226,321,0,0" VerticalAlignment="Top"/>
     </Grid>
 </Window>

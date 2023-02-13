@@ -1,4 +1,8 @@
-﻿using System;
+﻿// Name: Zachary Rose
+// Date: 2/13/2023
+// Class: CSCI 352
+// Allows access to an Access database (can view tables and make insertions) through a basic WPF application.
+using System;
 using System.Collections.Generic;
 using System.Data.OleDb;
 using System.Linq;
@@ -52,13 +56,22 @@ namespace CW6_Databases_in_WPF_Applications_CSCI352
             OleDbCommand cmd = new OleDbCommand(query, cn);
             cn.Open();
 
-            cmd.ExecuteNonQuery();
+            try
+            {
+                cmd.ExecuteNonQuery();
+                txt_display.Text = "Added successfully";
+            }
+            catch (System.Data.OleDb.OleDbException ex)
+            {
+                txt_display.Text = ex.Message;
+            }
+            cn.Close();
         }
         private void btn_see_assets_Click(object sender, RoutedEventArgs e)
         {
             string query = "select * from Assets";
            
-            string data = getTable(query);
+            string data = "Assets:\nEmpID\tAssetID\tDescription\n" + getTable(query);
 
             txt_display.Text = data;
         }
@@ -67,9 +80,66 @@ namespace CW6_Databases_in_WPF_Applications_CSCI352
         {
             string query = "select * from Employees";
 
-            string data = getTable(query);
+            string data = "Employees:\nEmpID\tFName\tLName\n" + getTable(query);
 
             txt_display.Text = data;
+        }
+
+        private void btn_add_assets_Click(object sender, RoutedEventArgs e)
+        {
+
+            string[] words = txt_add_to_table.Text.Split(' ');
+
+            // some basic checking so I don't explode my database
+            if (words.Length < 3)
+            {
+                // invalid input
+                return;
+            }
+            // quickly confirming the first two fields can be converted into integers
+            if ( !(Int32.TryParse(words[0], out int whatever) && Int32.TryParse(words[1], out int whatever2))){
+                // invalid input
+                txt_display.Text = "Please input a valid EmployeeID, AssetID, and description";
+                return;
+            }
+            
+            // Collates anything past the ID fields into a single description to allow for spaces
+            string description = "";
+            for (int i = 2; i < words.Length; i++)
+            {
+                description += words[i] + ' ';
+            }
+            // horrifying solution to prevent SQL injection by replacing quotes with spaces.
+            string query = "INSERT INTO Assets VALUES ('" + words[0] + "\', \'" + words[1] + "\', \'" + description.Replace('\'',' ').Replace('\"', ' ') + "\');";
+
+            addToTable(query);
+
+        }
+
+        private void btn_add_employees_Click(object sender, RoutedEventArgs e)
+        {
+            string[] words = txt_add_to_table.Text.Split(' ');
+
+            // some basic checking so I don't explode my database
+            if (words.Length < 3)
+            {
+                // invalid input              
+                return;
+            }
+
+            // confirms the first word is a number
+            if (!Int32.TryParse(words[0], out int whatever))
+            {
+                // invalid input
+                txt_display.Text = "Please input a valid unique EmployeeID, FirstName, and LastName";
+                return;
+            }
+
+            // horrifying solution to prevent SQL injection by replacing quotes with spaces.
+            string query = "INSERT INTO Employees VALUES ('" + words[0] + "\', \'" + 
+                words[1].Replace('\'', ' ').Replace('\"', ' ') + "\', \'" + words[2].Replace('\'', ' ').Replace('\"', ' ') + "\');";
+
+            addToTable(query);
         }
     }
 }
