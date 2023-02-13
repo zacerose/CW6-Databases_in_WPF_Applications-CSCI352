@@ -10,5 +10,7 @@
         <TextBlock x:Name="txt_display" HorizontalAlignment="Center" Margin="0,119,0,0" TextWrapping="Wrap" Text="TextBlock" VerticalAlignment="Top"/>
         <Button x:Name="btn_see_assets" Content="See Assets" HorizontalAlignment="Left" Margin="313,236,0,0" VerticalAlignment="Top" Click="btn_see_assets_Click"/>
         <Button x:Name="btn_see_employees" Content="See Employees" HorizontalAlignment="Left" Margin="414,236,0,0" VerticalAlignment="Top" RenderTransformOrigin="0.884,-0.259" Click="btn_see_employees_Click"/>
+        <Button x:Name="btn_add_assets" Content="Add Asset" HorizontalAlignment="Left" Margin="314,296,0,0" VerticalAlignment="Top" Click="btn_add_assets_Click"/>
+        <TextBox x:Name="txt_add_to_table" HorizontalAlignment="Left" Margin="343,346,0,0" TextWrapping="Wrap" Text="TextBox" VerticalAlignment="Top" Width="120"/>
     </Grid>
 </Window>

@@ -53,6 +53,8 @@ namespace CW6_Databases_in_WPF_Applications_CSCI352
             cn.Open();
 
             cmd.ExecuteNonQuery();
+
+            cn.Close();
         }
         private void btn_see_assets_Click(object sender, RoutedEventArgs e)
         {
@@ -70,6 +72,29 @@ namespace CW6_Databases_in_WPF_Applications_CSCI352
             string data = getTable(query);
 
             txt_display.Text = data;
+        }
+
+        private void btn_add_assets_Click(object sender, RoutedEventArgs e)
+        {
+
+            string[] words = txt_add_to_table.Text.Split(' ');
+
+            // some basic checking so I don't explode my database
+            if (words.Length < 3 )
+            {
+                // invalid input
+                return;
+            }
+            // quickly confirming the first two fields can be converted into integers
+            if ( !(Int32.TryParse(words[0], out int whatever) && Int32.TryParse(words[1], out int whatever2))){
+                // invalid input
+                return;
+            }
+            string query = "INSERT INTO Assets VALUES ('" + words[0] + "\', \'" + words[1] + "\', \'" + words[2] + "\');";
+
+            //txt_display.Text = query;
+            addToTable(query);
+
         }
     }
 }
