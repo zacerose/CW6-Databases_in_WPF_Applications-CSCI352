@@ -26,22 +26,49 @@ namespace CW6_Databases_in_WPF_Applications_CSCI352
         public MainWindow()
         {
             InitializeComponent();
-            cn = new OleDbConnection("Provider = Microsoft.ACE.OLEDB.12.0; Data Source =| DataDirectory |\\CW6 - Databases_in_WPF_Applications.accdb");
+            cn = new OleDbConnection("Provider=Microsoft.ACE.OLEDB.12.0;Data Source=|DataDirectory|\\CW6-Databases_in_WPF_Applications.accdb");
         }
 
-        private void btn_see_assets_Click(object sender, RoutedEventArgs e)
+        private string getTable(string query)
         {
-            string query = "select * from Assets";
-           
             OleDbCommand cmd = new OleDbCommand(query, cn);
             cn.Open();
 
             OleDbDataReader read = cmd.ExecuteReader();
             string data = "";
-            while(read.Read())
+            while (read.Read())
             {
-                data += read[0].ToString() + "\n";
+                for (int i = 0; i < read.VisibleFieldCount; i++)
+                {
+                    data += read[i].ToString() + '\t';
+                }
+                data += "\n";
             }
+            cn.Close();
+            return data;
+        }
+        private void addToTable(string query)
+        {
+            OleDbCommand cmd = new OleDbCommand(query, cn);
+            cn.Open();
+
+            cmd.ExecuteNonQuery();
+        }
+        private void btn_see_assets_Click(object sender, RoutedEventArgs e)
+        {
+            string query = "select * from Assets";
+           
+            string data = getTable(query);
+
+            txt_display.Text = data;
+        }
+
+        private void btn_see_employees_Click(object sender, RoutedEventArgs e)
+        {
+            string query = "select * from Employees";
+
+            string data = getTable(query);
+
             txt_display.Text = data;
         }
     }
