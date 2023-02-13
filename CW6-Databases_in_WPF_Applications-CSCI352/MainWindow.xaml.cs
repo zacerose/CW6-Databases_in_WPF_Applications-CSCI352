@@ -1,4 +1,8 @@
-﻿using System;
+﻿// Name: Zachary Rose
+// Date: 2/13/2023
+// Class: CSCI 352
+// Allows access to an Access database (can view tables and make insertions) through a basic WPF application.
+using System;
 using System.Collections.Generic;
 using System.Data.OleDb;
 using System.Linq;
@@ -105,9 +109,9 @@ namespace CW6_Databases_in_WPF_Applications_CSCI352
             {
                 description += words[i] + ' ';
             }
-            string query = "INSERT INTO Assets VALUES ('" + words[0] + "\', \'" + words[1] + "\', \'" + description + "\');";
+            // horrifying solution to prevent SQL injection by replacing quotes with spaces.
+            string query = "INSERT INTO Assets VALUES ('" + words[0] + "\', \'" + words[1] + "\', \'" + description.Replace('\'',' ').Replace('\"', ' ') + "\');";
 
-            //txt_display.Text = query;
             addToTable(query);
 
         }
@@ -130,9 +134,11 @@ namespace CW6_Databases_in_WPF_Applications_CSCI352
                 txt_display.Text = "Please input a valid unique EmployeeID, FirstName, and LastName";
                 return;
             }
-            string query = "INSERT INTO Employees VALUES ('" + words[0] + "\', \'" + words[1] + "\', \'" + words[2] + "\');";
 
-            //txt_display.Text = query;
+            // horrifying solution to prevent SQL injection by replacing quotes with spaces.
+            string query = "INSERT INTO Employees VALUES ('" + words[0] + "\', \'" + 
+                words[1].Replace('\'', ' ').Replace('\"', ' ') + "\', \'" + words[2].Replace('\'', ' ').Replace('\"', ' ') + "\');";
+
             addToTable(query);
         }
     }
