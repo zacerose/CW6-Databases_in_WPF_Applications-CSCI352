@@ -33,6 +33,7 @@ namespace CW6_Databases_in_WPF_Applications_CSCI352
             cn = new OleDbConnection("Provider=Microsoft.ACE.OLEDB.12.0;Data Source=|DataDirectory|\\CW6-Databases_in_WPF_Applications.accdb");
         }
 
+        // helper method, builds a string from the output of the SELECT query
         private string getTable(string query)
         {
             OleDbCommand cmd = new OleDbCommand(query, cn);
@@ -51,6 +52,7 @@ namespace CW6_Databases_in_WPF_Applications_CSCI352
             cn.Close();
             return data;
         }
+        // helper method, attempts to perform INSERT query on the table
         private void addToTable(string query)
         {
             OleDbCommand cmd = new OleDbCommand(query, cn);
@@ -103,13 +105,13 @@ namespace CW6_Databases_in_WPF_Applications_CSCI352
                 return;
             }
             
-            // Collates anything past the ID fields into a single description to allow for spaces
+            // Collates anything past the ID fields into a single description string to allow for spaces (adds spaces back in from split)
             string description = "";
             for (int i = 2; i < words.Length; i++)
             {
                 description += words[i] + ' ';
             }
-            // horrifying solution to prevent SQL injection by replacing quotes with spaces.
+            // prevents SQL injection by replacing quotes with spaces.
             string query = "INSERT INTO Assets VALUES ('" + words[0] + "\', \'" + words[1] + "\', \'" + description.Replace('\'',' ').Replace('\"', ' ') + "\');";
 
             addToTable(query);
@@ -135,7 +137,7 @@ namespace CW6_Databases_in_WPF_Applications_CSCI352
                 return;
             }
 
-            // horrifying solution to prevent SQL injection by replacing quotes with spaces.
+            // prevents SQL injection by replacing quotes with spaces.
             string query = "INSERT INTO Employees VALUES ('" + words[0] + "\', \'" + 
                 words[1].Replace('\'', ' ').Replace('\"', ' ') + "\', \'" + words[2].Replace('\'', ' ').Replace('\"', ' ') + "\');";
 
